@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ePortfolio | Denis Ferauge</title>
+    <style>
+        :root {
+            --bg-base: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --accent-primary: #0284c7;
+            --accent-hover: #0369a1;
+            --border-color: #cbd5e1;
+            
+            /* Couleurs thématiques */
+            --accent-warning: #b45309; 
+            --color-forces: #16a34a;
+            --color-faiblesses: #dc2626;
+            --color-opportunites: #2563eb;
+            --color-menaces: #ea580c;
+            --color-pix: #3b82f6;
+            --bg-pix-badge: #eff6ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            background-color: var(--bg-base);
+            background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            max-width: 850px;
+            margin: 3rem auto 2rem;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin: 0 0 1.5rem 0;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .btn-cv {
+            display: inline-flex;
+            background-color: var(--accent-primary);
+            color: #ffffff;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+        }
+
+        .btn-cv:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background-color: var(--accent-primary);
+            border-radius: 2px;
+        }
+
+        h2.security-title { color: var(--accent-warning); }
+        h2.security-title::before { background-color: var(--accent-warning); }
+        
+        h2.pix-title { color: #5b21b6; }
+        h2.pix-title::before { background-color: #5b21b6; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 1.8rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+        }
+
+        .card-security {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--accent-warning);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+            border-left: 5px solid var(--accent-warning);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 0.3rem;
+            color: var(--text-main);
+        }
+
+        .date {
+            font-weight: 600;
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* SWOT */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .swot-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+        }
+
+        .swot-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .swot-forces { border-top: 4px solid var(--color-forces); }
+        .swot-forces .swot-header { color: var(--color-forces); }
+        .swot-faiblesses { border-top: 4px solid var(--color-faiblesses); }
+        .swot-faiblesses .swot-header { color: var(--color-faiblesses); }
+        .swot-opportunites { border-top: 4px solid var(--color-opportunites); }
+        .swot-opportunites .swot-header { color: var(--color-opportunites); }
+        .swot-menaces { border-top: 4px solid var(--color-menaces); }
+        .swot-menaces .swot-header { color: var(--color-menaces); }
+        .swot-card ul { padding-left: 1.2rem; margin: 0; }
+        .swot-card li { margin-bottom: 0.75rem; }
+
+        /* Styles Spécifiques PIX */
+        .pix-container {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(203, 213, 225, 0.5);
+            border-left: 5px solid #6d28d9;
+        }
+
+        .pix-score-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            background: #f5f3ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #ddd6fe;
+        }
+
+        .pix-badge-large {
+            background: #6d28d9;
+            color: #ffffff;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.8rem;
+            line-height: 1;
+            box-shadow: 0 4px 10px rgba(109, 40, 217, 0.3);
+        }
+
+        .pix-badge-large span {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            color: #ddd6fe;
+        }
+
+        .pix-intro-text {
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        .pix-sub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .pix-sub-card {
+            background: #fafafa;
+            border: 1px solid #e5e7eb;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pix-sub-card span.level {
+            background: #6d28d9;
+            color: white;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .skills-zone {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(203, 213, 225, 0.5);
+        }
+
+        .contact-layout ul { list-style: none; padding: 0; margin: 0; }
+        .contact-layout li { margin-bottom: 0.8rem; }
+        .contact-layout a { color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            background-color: #0f172a;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .swot-grid { grid-template-columns: 1fr; }
+            .pix-score-wrapper { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Denis Ferauge</div>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#formations">Formations</a></li>
+                <li><a href="#experiences">Expériences</a></li>
+                <li><a href="#securite">Sécurité</a></li>
+                <li><a href="#swot">SWOT</a></li>
+                <li><a href="#pix">PIX</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="accueil" class="container">
+        <div class="hero">
+            <h1>Bonjour et bienvenue !</h1>
+            <p>Je suis <strong>Denis Ferauge</strong>, futur diplômé en électromécanique à l'EPHEC[cite: 1]. Passionné par mon domaine, polyvalent et toujours prêt à apprendre, ce portfolio retrace mes expériences, mes stages et mon implication étudiante[cite: 1]. Établi à Céroux-Mousty[cite: 1], je dispose d'un profil calme, discret et motivé à évoluer au sein d'équipes techniques[cite: 1].</p>
+            <a href="CV Denis Ferauge 2026.pdf" class="btn-cv" target="_blank">📄 Consulter mon CV Complet (PDF)</a>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- FORMATIONS -->
+        <section id="formations">
+            <h2>Formations</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Bachelier en électromécanique</h3>
+                    <p class="date">2024 - Juin 2026</p>
+                    <p><strong>EPHEC (ISAT), Schaerbeek</strong><br>Actuellement en 3ème année, diplôme prévu en juin 2026[cite: 1].</p>
+                </div>
+                <div class="card">
+                    <h3>Études d'Ingénieur Industriel en Électromécanique</h3>
+                    <p class="date">2019 - 2024</p>
+                    <p><strong>ECAM, Woluwe-Saint-Lambert</strong><br>Formation suivie jusqu'en 3ème bachelier[cite: 1].</p>
+                </div>
+                <div class="card">
+                    <h3>CESS</h3>
+                    <p class="date">Diplômé en 2019</p>
+                    <p><strong>Collège-Saint-Étienne</strong>, Court-Saint-Étienne[cite: 1].</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPÉRIENCES & STAGES -->
+        <section id="experiences">
+            <h2>Stages & Expériences Professionnelles</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Assistant Chef de Projet (Stage)</h3>
+                    <p class="date">Février — Mai 2026 (15 semaines)</p>
+                    <p><strong>Transelec, Nivelles</strong><br>Stage de fin d'études EPHEC en bureau d'études multi-techniques électrique[cite: 1]. (Également occupé en job étudiant en juillet-août 2025[cite: 1]).</p>
+                </div>
+                <div class="card">
+                    <h3>Collaborateur en Bureau d'Études (Stage)</h3>
+                    <p class="date">Avril — Mai 2024 (6 semaines)</p>
+                    <p><strong>Détang Engineering, Nivelles</strong><br>Stage de 3ème bachelier ECAM, spécialisé en techniques spéciales[cite: 1].</p>
+                </div>
+                <div class="card">
+                    <h3>Préparation & Emballage de commandes</h3>
+                    <p class="date">Jobs étudiants (2020 à 2024)</p>
+                    <p><strong>Formula-Air, Perwez</strong><br>Missions régulières durant les vacances d'été[cite: 1].</p>
+                </div>
+                <div class="card">
+                    <h3>Employé Service Administratif</h3>
+                    <p class="date">Juillet 2019 & 2020</p>
+                    <p><strong>Commune d'Ottignies-Louvain-la-Neuve</strong><br>Travail au sein du service cartographie[cite: 1].</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SÉCURITÉ -->
+        <section id="securite">
+            <h2 class="security-title">La sécurité au cœur de la formation</h2>
+            <div class="card-security">
+                <p>La sécurité et la prévention des risques professionnels font partie intégrante de notre cursus à l'EPHEC[cite: 1]. Nous suivons un enseignement qui nous donne les outils essentiels pour comprendre, anticiper et gérer les risques techniques et humains en entreprise[cite: 1].</p>
+                <p>Cet apprentissage est notamment validé par la réalisation d'un <strong>Serious Game</strong>[cite: 1]. Ce jeu de rôle virtuel et interactif nous met face à des situations concrètes de terrain, nous poussant à prendre des décisions rapides et conformes aux normes[cite: 1]. J'ai d'ailleurs eu l'opportunité d'appliquer concrètement l'ensemble de ces notions et de ces réflexes de prévention lors de mes deux stages, ce qui m'a permis de travailler de manière responsable et sécurisée directement sur le terrain[cite: 1].</p>
+            </div>
+        </section>
+
+        <!-- ANALYSE SWOT -->
+        <section id="swot">
+            <h2>Mon Analyse SWOT</h2>
+            <div class="swot-grid">
+                <div class="swot-card swot-forces">
+                    <div class="swot-header">🟢 Forces</div>
+                    <ul>
+                        <li><strong>Double profil technique :</strong> Un bagage théorique et analytique solide (150 crédits en ingénierie à l'ECAM) combiné à une approche très pratique et de terrain (Bachelier EPHEC)[cite: 1].</li>
+                        <li><strong>Expérience concrète en gestion de projet :</strong> Validée par un stage de 15 semaines en tant qu'assistant Project Manager et par la gestion d'événements associatifs de grande ampleur (jusqu'à 650 personnes)[cite: 1].</li>
+                        <li><strong>Savoir-être (Soft skills) :</strong> D'un naturel calme, curieux et discret, je m'intègre facilement dans une équipe[cite: 1]. Mon rôle de trésorier prouve également ma grande rigueur[cite: 1].</li>
+                        <li><strong>Compétences logicielles :</strong> Maîtrise d'outils clés en bureau d'études (AutoCAD, Trikker, et certification CSWA sur SolidWorks)[cite: 1].</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card swot-faiblesses">
+                    <div class="swot-header">🔴 Faiblesses</div>
+                    <ul>
+                        <li><strong>Nature discrète :</strong> Bien que ce soit une force pour le travail en équipe, ma discrétion naturelle peut parfois me demander un petit effort supplémentaire pour m'imposer ou prendre le leadership lors des toutes premières phases d'un nouveau projet[cite: 1].</li>
+                        <li><strong>Compétences linguistiques :</strong> Mon niveau d'anglais est "correct", mais nécessiterait d'être pratiqué davantage pour être totalement fluide dans un environnement technique international[cite: 1].</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card swot-opportunites">
+                    <div class="swot-header">🔵 Opportunités</div>
+                    <ul>
+                        <li><strong>Secteur en forte demande :</strong> Les profils en électromécanique, particulièrement ceux orientés vers les techniques spéciales et l'électricité tertiaire, sont très recherchés par les bureaux d'études[cite: 1].</li>
+                        <li><strong>Valorisation des profils hybrides :</strong> Les entreprises apprécient particulièrement les techniciens capables de comprendre la vision globale d'un ingénieur (grâce à mon passage à l'ECAM) tout en sachant gérer l'opérationnel[cite: 1].</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card swot-menaces">
+                    <div class="swot-header">🟠 Menaces</div>
+                    <ul>
+                        <li><strong>Évolution rapide des technologies :</strong> Le domaine de l'électromécanique (notamment les logiciels et les normes de sécurité) évolue vite, ce qui impose de se former en continu pour rester à jour[cite: 1].</li>
+                        <li><strong>Concurrence sur le marché de l'emploi :</strong> Même si le secteur recrute, il faut réussir à se démarquer des autres jeunes diplômés lors des entretiens pour décrocher des postes à responsabilités (comme Chef de Projet)[cite: 1].</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOUVELLE SECTION : COMPÉTENCES NUMÉRIQUES (PIX) -->
+        <section id="pix">
+            <h2 class="pix-title">Compétences numériques : PIX</h2>
+            <div class="pix-container">
+                <div class="pix-score-wrapper">
+                    <div class="pix-badge-large">
+                        <span>SCORE</span>682 <!--[cite: 1] -->
+                    </div>
+                    <p class="pix-intro-text">
+                        Afin de valider mon niveau de maîtrise des environnements numériques, je me suis entraîné sur la plateforme PIX avec pour objectif scolaire d'y valider 80 niveaux cumulés. Vous pouvez retrouver ci-dessous le détail de mes résultats prouvant que cet objectif a été atteint avec succès !
+                    </p>
+                </div>
+                
+                <h3>Aperçu de mes niveaux clés par domaine :</h3>
+                <div class="pix-sub-grid">
+                    <div class="pix-sub-card">
+                        <span>Gérer des données[cite: 1]</span>
+                        <span class="level">Niv. 6</span> <!--[cite: 1] -->
+                    </div>
+                    <div class="pix-sub-card">
+                        <span>Programmer[cite: 1]</span>
+                        <span class="level">Niv. 6</span> <!--[cite: 1] -->
+                    </div>
+                    <div class="pix-sub-card">
+                        <span>Partager et publier[cite: 1]</span>
+                        <span class="level">Niv. 6</span> <!--[cite: 1] -->
+                    </div>
+                    <div class="pix-sub-card">
+                        <span>Résoudre des problèmes[cite: 1]</span>
+                        <span class="level">Niv. 6</span> <!--[cite: 1] -->
+                    </div>
+                    <div class="pix-sub-card">
+                        <span>Sécuriser l'environnement[cite: 1]</span>
+                        <span class="level">Niv. 5</span> <!--[cite: 1] -->
+                    </div>
+                    <div class="pix-sub-card">
+                        <span>Mener une recherche[cite: 1]</span>
+                        <span class="level">Niv. 5</span> <!--[cite: 1] -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPÉTENCES -->
+        <section id="competences">
+            <h2>Compétences & Atouts généraux</h2>
+            <div class="skills-zone">
+                <div class="card">
+                    <h3>Logiciels & Techniques</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Solidworks (Certif. CSWA)[cite: 1]</span>
+                        <span class="skill-tag">AutoCAD[cite: 1]</span>
+                        <span class="skill-tag">Trikker[cite: 1]</span>
+                        <span class="skill-tag">Suite Office[cite: 1]</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Langues</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Français (Maternelle)[cite: 1]</span>
+                        <span class="skill-tag">Anglais (Correct)[cite: 1]</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Atouts & Engagements</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Gestion de trésorerie (Vulcania)[cite: 1]</span>
+                        <span class="skill-tag">Organisation d'événements[cite: 1]</span>
+                        <span class="skill-tag">Permis B & A2 (Véhiculé)[cite: 1]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <h2>Me Contacter / Informations personnelles</h2>
+            <div class="contact-layout">
+                <div>
+                    <h3>Coordonnées</h3>
+                    <ul>
+                        <li><strong>Téléphone :</strong> 0491 50 60 98[cite: 1]</li>
+                        <li><strong>Email :</strong> <a href="mailto:den.ferauge@gmail.com">den.ferauge@gmail.com</a>[cite: 1]</li>
+                        <li><strong>Adresse :</strong> Avenue des Vallées 36, 1341 Céroux-Mousty[cite: 1]</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Profil</h3>
+                    <p>Trésorier et responsable organisation (Bal de l'école) au sein de l'association étudiante <em>La Vulcania</em>[cite: 1]. Calme, rigoureux et autonome grâce à mes permis de conduire et véhicule personnel[cite: 1].</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Denis Ferauge. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>
